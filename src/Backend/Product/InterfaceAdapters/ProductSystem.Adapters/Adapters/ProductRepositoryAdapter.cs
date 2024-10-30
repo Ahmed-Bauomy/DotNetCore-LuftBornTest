@@ -37,9 +37,10 @@ namespace ProductSystem.Adapters.Adapters
             await _repository.DeleteAsync(entity);
         }
 
-        public async Task<IReadOnlyList<Product>> GetAllAsync()
+        public async Task<IReadOnlyList<ProductDTO>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            var products = await _repository.GetAllAsync();
+            return _mapper.Map<List<ProductDTO>>(products);
         }
 
         public async Task<IReadOnlyList<Product>> GetAsync(Expression<Func<Product, bool>> predicate)
