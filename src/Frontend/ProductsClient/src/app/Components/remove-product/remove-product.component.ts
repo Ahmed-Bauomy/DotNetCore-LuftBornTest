@@ -29,7 +29,7 @@ export class RemoveProductComponent implements OnInit {
   ngOnInit(): void {
     this.Loading=true;
     this.id=this._activatedRoute.snapshot.params["id"];
-    this._productService.products.filter(p => p.id == this.id);
+    this.product =this._productService.products.find(p => p.id == this.id)!;
     // this._productService.getProductById(this.id).subscribe(
     //  (data)=>{
     //   this.Loading=false;
