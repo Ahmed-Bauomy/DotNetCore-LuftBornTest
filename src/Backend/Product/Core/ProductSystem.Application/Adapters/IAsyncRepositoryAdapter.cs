@@ -1,5 +1,6 @@
 ﻿using ProductSystem.Application.Features.Commands.CreateProduct;
 using ProductSystem.Application.Features.Commands.UpdateProduct;
+using ProductSystem.Application.Models;
 using ProductSystem.Domain.Contracts;
 using ProductSystem.Domain.Entities;
 using System;
@@ -13,7 +14,7 @@ namespace ProductSystem.Application.Adapters
 {
     public interface IAsyncRepositoryAdapter<T> where T : class
     {
-        Task<IReadOnlyList<T>> GetAllAsync();
+        Task<IReadOnlyList<ProductDTO>> GetAllAsync();
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
                                         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,

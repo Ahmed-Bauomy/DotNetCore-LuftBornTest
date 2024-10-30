@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductSystem.Application.Features.Commands.CreateProduct;
 using ProductSystem.Application.Features.Commands.DeleteProduct;
 using ProductSystem.Application.Features.Commands.UpdateProduct;
+using ProductSystem.Application.Features.Queries.GetProducts;
 using ProductSystem.Application.Features.Queries.GetProductsByCategory;
 using ProductSystem.Application.Models;
 using ProductSystem.Domain.Entities;
@@ -11,7 +12,7 @@ using System.Net;
 namespace ProductSystem.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
@@ -28,6 +29,15 @@ namespace ProductSystem.API.Controllers
         public async Task<IActionResult> CreateProduct(CreateProductCommand product)
         {
             var result = await _mediator.Send(product);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProductDTO>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts()
+        {
+            var query = new GetProductsQuery();
+            var result = await _mediator.Send(query);
             return Ok(result);
         }
 

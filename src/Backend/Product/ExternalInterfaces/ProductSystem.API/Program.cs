@@ -19,6 +19,17 @@ namespace ProductSystem.API
             builder.Services.AddApplicationServices();
             builder.Services.AddAdapterServices();
 
+            var policy = "allowAll";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: policy, config =>
+                {
+                    config.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,7 +38,7 @@ namespace ProductSystem.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors(policy);
             app.UseAuthorization();
 
 
